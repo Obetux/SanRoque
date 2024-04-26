@@ -1,0 +1,240 @@
+
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Buscador Barrio San Roque </title>
+      <link rel="icon" type="image/x-icon" href="https://www.cdnlogo.com/logos/g/81/google-maps-2020-icon.svg">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        /* Add your Tailwind CSS styles here */
+        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css');
+
+        /* Custom styles */
+        body {
+          font-family: 'Courier New', monospace; /* Set font to Courier New */
+        }
+
+        .container {
+          margin: 0 auto;
+          padding: 20px;
+        }
+
+        .heading {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 20px;
+        }
+
+        .form-container {
+          display: flex;
+          align-items: center;
+          margin-bottom: 15px;
+        }
+
+        .form-label {
+          width: 100px; /* Adjust label width */
+          margin-right: 10px;
+        }
+
+        .form-input {
+          flex: 1;
+          padding: 10px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+        }
+
+        .btn {
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          cursor: pointer;
+        }
+
+        /* Center align the common links */
+        .common-links {
+          text-align: center;
+        }
+
+        .common-links a {
+          display: inline; /* Adjust display property */
+          margin-right: 10px; /* Add margin as needed */
+        }
+
+        /* Add this CSS to center align radio buttons */
+        table {
+          margin: 0 auto; /* Center the table horizontally */
+          display: flex; /* Use flexbox */
+          justify-content: center; /* Center align the content */
+        }
+
+        td {
+          display: inline-block;
+          vertical-align: middle; /* Align labels vertically */
+          margin-bottom: 0; /* Remove bottom margin */
+        }
+
+        .radio-container {
+          display: flex; /* Use flexbox */
+          justify-content: center; /* Center align the content */
+          align-items: center; /* Align items vertically */
+          margin-bottom: 15px; /* Add margin to separate from other elements */
+        }
+
+        .radio-container label {
+          margin-right: 5px; /* Reduce the margin between label and radio button */
+          vertical-align: middle; /* Align radio buttons vertically */
+        }
+
+        /* Ensure heading stays on one line */
+        .heading {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        /* Responsive adjustments */
+        @media only screen and (max-width: 600px) {
+          .heading {
+            font-size: 20px; /* Adjust font size for smaller screens */
+          }
+
+          .form-label {
+            width: 80px; /* Adjust label width for smaller screens */
+          }
+        }
+
+        .fa-whatsapp  {
+          color:#fff;
+          background:
+           linear-gradient(#25d366,#25d366) 14% 84%/16% 16% no-repeat,
+           radial-gradient(#25d366 58%,transparent 0);
+        }
+      </style>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+      <script>
+function validateForm() {
+    var loteInput = document.getElementById('lote');
+    var loteValue = parseInt(loteInput.value.trim(), 10); // Parse input value to integer
+
+    // Check if the value is empty or contains non-numeric characters
+    if (isNaN(loteValue) || loteValue < 1 || loteValue > 1515) {
+        alert('Por favor ingrese un número valido para el lote.');
+        loteInput.focus();
+        return false;
+    }
+}
+
+function constructSitioComunLinks() {
+    var googleRadio = document.getElementById('google');
+    var wazeRadio = document.getElementById('waze');
+    var selectedOption;
+
+    if (googleRadio.checked) {
+        selectedOption = googleRadio.value;
+    } else if (wazeRadio.checked) {
+        selectedOption = wazeRadio.value;
+    } else {
+        // Handle if no option is selected
+        return;
+    }
+
+    var loteInput = document.getElementById('lote').value.trim();
+    var commonLinks = document.querySelectorAll('.common-link');
+
+    commonLinks.forEach(function(link) {
+        var href = link.getAttribute('data-base-url') + "&navigation=" + selectedOption;
+        link.href = href;
+    });
+}
+
+window.onload = function() {
+    constructSitioComunLinks(); // Call on page load
+    document.getElementById('lote').focus(); // Focus on the input field
+};
+</script>
+
+      <script defer src="/_vercel/insights/script.js"></script>
+
+      <!-- Google tag (gtag.js) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-SML4RG2QC0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SML4RG2QC0');
+</script>
+-->
+    </head>
+    <body>
+    <div class="container">
+      <center>
+        <h1 class="heading">Buscador Barrio San Roque <i class="fa-regular fa-map"></i></h1>
+      </center>
+      <form action="/search" method="GET" onsubmit="return validateForm()"> 
+      <div class="form-container">
+      <label for="lote" class="form-label">Nro. Lote:</label>
+      <input type="number" id="lote" name="lote" class="form-input"  required maxlength="3"> 
+      </div>
+        <table align="center">
+        <tr>
+          <td><label for="google">Google Maps</label></td>
+          <td><input type="radio" id="google" name="navigation" value="google" class="form-input" onchange="constructSitioComunLinks()" checked></td>
+          <td>&nbsp;|&nbsp;</td><td><label for="waze">Waze</label></td>
+          <td><input type="radio" id="waze" name="navigation" value="waze" class="form-input" onchange="constructSitioComunLinks()"></td>
+        </tr>
+      </table>
+        <center> <button type="submit" class="btn">Buscar</button> </center>
+      </form>
+  <br>
+        <center><h2><b><u>Sitios Comunes</u></b></h2></center>
+        <ul class="common-links">
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1505">Administracion</a></li>  
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1504">Area de Servicio</a></li>  
+          <li class="common-links">
+          <a href="#" class="common-link" data-base-url="/search?lote=1500">Foodbox</a> |
+          <a class="common" href="https://thefoodboxarg.com/nuestro-menu-san-matias/">MENU</a> |
+          <a href="https://wa.me/541176209143"><i class="fab fa-whatsapp fa-2x"></i></a>
+        </li>
+        <li class="common-links">
+        <a href="#" class="common-link" data-base-url="/search?lote=1508">MailRoom</a> <span style="font-size: 75%;">(L-V 7 a 18:45 y Sab 7 a 11 y 15 a 18:45)</span> | <a href="https://wa.me/541131507512"><i class="fab fa-whatsapp fa-2x"></i></a>   
+        </li>
+        
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1506">House San Matias</a></li>  
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1501">Plaza Area 2</a></li>
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1502">Plaza Area 3</a></li>
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1503">Plaza Area 4</a></li>
+        </ul>
+        <br>
+        <center><h2><b><u>Informacion util</u></b></h2></center>
+        <ul class="common-links">
+        <li class="common-links">
+        <a class="common" href="https://sites.google.com/view/sanmatias-vecinos">San Matias Vecinos<span style="font-size: 75%;"> (info Util de SM)</span></a>
+    </li>
+        <li class="common-links">
+        <a href="https://wa.me/541168131202">Bot Escobar <i class="fab fa-whatsapp fa-2x"></i></a>
+    </li>
+          <li><a href="#" class="common-link" data-base-url="/search?lote=1507">UDP Ing.Maschwitz</a></li>  
+          <li class="common-links">
+            <a href="https://wa.me/541162063530">Ojos y Oidos Escobar <i class="fab fa-whatsapp fa-2x"></i></a>
+        </li>
+
+        <li class="common-links">
+        <a href="https://eldiadeescobar.com.ar/farmacias-de-turno/">Farmacias de turno</a>
+    </li>
+        
+        <br>
+        <li class="common-links">
+                <a class="common" href="/info"><b> >> Click mas informacion util! << </b></a> 
+              </li>
+        </ul>
+      </div>
+      <footer>
+        <center> <p><b>Sugerencias?</b></br><a href="mailto:sanmap@alfajor.sh">sanmap@alfajor.sh</a> v1.04</p></center>
+              </footer>
+    </body>
+  </html>
+  
